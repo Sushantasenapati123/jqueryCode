@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+    <script>
+        $(function () {
+            var counter = 2;
+            $("#btnAdd").click(function () {
+               
+                var table = $("#tblSubjects");
+                if (table.find("tr").length == 5) {
+                    alert("max reach");
+                    return
+                }
+
+                var value = "Subject";
+
+                var tr = $("<tr>");
+
+                var td = $("<td>");
+                var lable = $('<label id="ID_item">' + value + '</label>');
+                td.append(lable);
+                tr.append(td);
+
+                var td = $("<td>");
+                var textbox = $("<input>").attr("id", "txtsubject").attr("type", "text");
+                td.append(textbox);
+                tr.append(td);
+
+                var td = $("<td>");
+                var lable = $('<label id="ID_item">' + "Mark" + '</label>');
+                td.append(lable);
+                tr.append(td);
+
+                var td = $("<td>");
+                var textbox = $("<input>").attr("id", "txtMarks").attr("type", "text");
+                td.append(textbox);
+                tr.append(td);
+
+                var td = $("<td>");
+                var button = $("<button>").addClass('btn').text("X").attr("id", 'TextBox' + counter);
+                    counter++;
+                td.append(button);
+                tr.append(td);
+                table.append(tr);
+               
+                button.click(function () {
+                    var res = confirm("Do You Want To Delete");
+                    if (res) {
+                        button.closest("tr").remove();
+                    }
+                })
+            })
+
+          
+
+            $("#btnSave").click(function () {
+                var div = $("#outputTable");
+                $("#tblSubjects tr").each(function () {
+                    var subjects = $(this).find("#txtsubject").val();
+                    var mark = $(this).find("#txtMarks").val();
+                    if (subjects == "")
+
+                        if (mark == "")
+                            $(this).find("#txtMarks").css({ "background-color": "red" });
+                        else
+                            $(this).find("#txtMarks").css({ "background-color": "white" });
+
+
+                    if (subjects == "")
+                        $(this).find("#txtsubject").css({ "background-color": "red" });
+                    else
+                        $(this).find("#txtsubject").css({ "background-color": "white" });
+
+
+                    var status = "";
+
+                    if (parseInt(mark) >= 50) {
+                        status = "pass"
+                    }
+                    else
+                        status = "fail";
+                    if (mark != "" && subjects != "") {
+                        div.append("subjects:" + subjects + ",Marks:" + mark + ",Status:" + status)
+                        div.append("<br>");
+                        $(this).find("#txtMarks").val("");
+                        $(this).find("#txtsubject").val("");
+                    }
+                });
+            })
+
+
+        })
+
+    </script>
+</head>
+
+<body>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <input id="btnAdd" type="button" value="addSubject" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table id="tblSubjects"></table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="btnSave" type="button" value="Save" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+
+
+    <div id="outputTable"></div>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="https://github.com/sweetalert2/sweetalert2-react-content" target="_blank" rel="noopener" aria-label="React integration">
+    React
+    <br>
+    <img src="/images/react.svg" width="125" alt="">
+  </a>
