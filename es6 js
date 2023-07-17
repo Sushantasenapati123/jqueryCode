@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <span id="spn"></span>
+</body>
+
+</html>
+<script src="/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    const users = [
+        {
+            id: 1,
+            name: "Ajay",
+            IsActive: true,
+            age: 50
+        },
+        {
+            id: 2,
+            name: "Mikun",
+            IsActive: true,
+            age: 28
+        },
+        {
+            id: 1,
+            name: "Chikun",
+            IsActive: false,
+            age: 26
+        },
+    ]
+var a=9;
+//var let const
+//es5-var(function scope)//itself add to the window
+//es6-let(braces scope),const////itself do not add to the window
+function fc()
+{var x=10;
+    for(var i=0;i<5;i++)//use let to see the difference
+    { 
+        //console.log(i);
+
+    }
+    function print(){
+        var k=90;
+        console.log(x);
+    }
+    print();
+    //console.log(k);
+}
+fc();//1 2 3 4 5
+//browser context object ex-window,stack,heap
+//all variable are store in heap memory
+
+//execution context is a container where the function code is executed
+//and its created when it is called it contain variable,fun inside fun,lexical environment)
+//falsy value:0,false,undefind,null,NAN,document.all
+//how to copy a arry
+var arr=[1,2]
+var arr2=[...arr]
+
+setTimeout(function(){
+    console.log("hyy");
+},2000)
+
+//first class function
+var x=function(){console.log("first");}
+x();
+function fstclass(s)
+{
+    s();
+}
+fstclass(function(){console.log("second");})
+
+
+
+
+
+
+    function getdate() {
+        setTimeout(() => {
+            let output = "";
+            users.forEach((user) => {
+                output += `<li>${user.name}</li>`;
+            })
+            document.body.innerHTML = output;
+        }, 1000);//two second
+    }
+     // start callback,promices,async,await use in  asyncronus javascript programming  
+   
+    // getdate();
+    function Creatdate(newdata) {
+        setTimeout(() => {
+            users.push(newdata);
+        }, 2000);//one second
+    }
+    // Creatdate({id: 7, name: "Shyam", IsActive: false, age: 26 });//function call
+
+    //use call back use call back  use call back
+    function Creatdatecallback(newdata, callback) {
+        setTimeout(() => {
+            users.push(newdata);
+            callback();
+        }, 2000);//one second=1000 mili second
+    }
+    //Creatdatecallback({id: 7, name: "Shyam", IsActive: false, age: 26 },getdate);//function call
+
+
+    //promise can handel both reject and resolve        
+
+    function CreatdatePromise(newdata) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                users.push(newdata);
+                let err = false;
+                if (!err) {
+                    resolve();
+                }
+                else {
+                    reject("some error");
+                }
+
+            }, 2000);//one second
+
+        })
+
+    }
+    //CreatdatePromise({ id: 7, name: "Shyam", IsActive: false, age: 26 }).then(getdate).catch(err=>console.log(err));//function call
+    
+    //async and await
+    function Creatdateasync(newdata) {
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                users.push(newdata);
+                let err = false;
+                if (!err) {
+                    resolve();
+                }
+                else {
+                    reject("some error");
+                }
+
+            }, 5000);//one second
+
+        })
+    }
+    function getdateasync() {
+        setTimeout(() => {
+            let output = "";
+            users.forEach((user) => {
+                output += `<li>${user.name}</li>`;
+            })
+            document.body.innerHTML = output;
+        }, 1000);//two second
+    }
+    //this code will work if you wright the function Creatdateasync using Promise 
+    async function startasync() {
+        await Creatdateasync({ id: 7, name: "Shyam", IsActive: false, age: 26 });
+        getdateasync()
+    }
+    //startasync();
+    //End ENd END ENd  callback,promices,async,await use in  asyncronus javascript programming  
+   
+
+
+    //closuer in js
+    var sum = function (a) {
+        console.log("live viewer is" + a);//live viewer is200
+        var c = 4;
+        return function (b) {//call this function using store variable
+            return a + b + c;//lexical scope of a and c
+        }
+    }
+    //var store=sum(200);//once the function call the value is retain,this is closure
+    //console.log(store(5));//209
+    //another example of clsure
+    var sum = function (a, b, c) {
+        return {
+            sumoftwo: function () {
+                return a + b;
+            },
+            sumofthree: function () {
+                return a + b + c;
+            }
+        }
+    }
+    var stor = sum(1, 2, 3)
+    //console.log(stor.sumoftwo());//3
+    //console.log(stor.sumofthree());//6
+
+
+    var x = false;
+    function checknam(nam) {
+        users.forEach(element => {
+            if (element.name == nam)
+                x = true
+        });
+
+       // console.log("inside funct " + x);
+        return x;
+    }
+    //console.log(checknam("Ajay"));
+    //arrow function
+    let isnameexittfind = (name, users) => {//users is any arry
+        const user = users.find((user) => user.name === name);//find method return type object
+        return Boolean(user)
+    }
+    // console.log(isnameexittfind("Mikun",users));//true
+
+
+    let isnameexitfindIndex = (name, users) => {
+        const user = users.findIndex((user) => user.name === name);
+        return user
+    }
+    //console.log(isnameexitfindIndex("Mikun",users));//1:find
+    //console.log(isnameexit("Mikunn", users));//-1:not find
+    var isnameexitysome = (name, users) => {
+        const user = users.some((user) => user.name === name);//some fun return boolean value
+        return user
+    }
+    //console.log(isnameexitysome("Mikun", users));//true
+    var arr = [1, 2];
+    var append = (arry, u) => {
+        arry.push(u);
+        return arry;
+    }
+    //console.log(append(arr,5));//(3) [1, 2, 5]
+    //console.log(arr);//(3) [1, 2, 5]
+
+    //if you want to not modify the original arry then you
+    //should go through spread operator
+
+    //the spread operator will expand arr to 1, 2
+    //After expanding arr, the number 4 is added as the 
+    //last element in the new array
+    var newarry = (arr, ele) => {
+        return [...arr, ele]
+    }
+    //console.log(newarry(arr,4));//(3) [1, 2, 4]
+    //console.log(arr);//(2) [1, 2]
+
+
+    //Remove Duplicate in arry
+    //Tip:put the arry in a set becoz set do not contain duplicate value
+    const arry = [3, 5, 5, 5, 3, 77849]
+    var uniquearry = (arry) => {
+        const uniq = [];
+        arry.forEach(element => {
+            if (!uniq.includes(element)) {//check wheather the element present in the
+                //uniq arry or not
+                uniq.push(element);
+            }
+        });
+        return uniq;
+    }
+    //console.log(uniquearry(arry));//(3) [3, 5, 77849]
+    var uniquearrySet = (arry) => {
+
+        return [...new Set(arry)];
+    }
+    //console.log(uniquearrySet(arry));//(3) [3, 5, 77849]
+
+
+    var uniquearryReduce = (arry) => {
+        return arry.reduce((accumulat, ele) => {
+            return accumulat.includes(ele) ? accumulat : [...accumulat, ele]
+        }, [])
+    }
+    //console.log(uniquearryReduce(arry));//(3) [3, 5, 77849]
+
+
+    var chi = "";
+    //for each dont return any thing
+    // map fun retur a arry
+
+    users.forEach(element => {
+        if (element.IsActive) {
+            chi += element.name + ",";
+        }
+    });
+
+
+    //method channing
+    //const name=users.filter((user)=>user.IsActive)
+   
+  //  .sort((num1,num2)=>num1.age<num2.age?1:-1)
+ 
+    //.map((user)=>user.age)//o/p:(2) [28, 50]
+    //console.log(name);
+    //method channing
+
+    const nam = users.filter((user) => user.IsActive)
+        .sort()
+        .map((user) => user.age)//op:(2) [50, 28] which is by default
+
+
+    const numbers = [5, 1, 3, 2, 4];
+
+   // $("#spn").html(numbers.sort((num1,num2)=>num1<num2?1:-1));//op:54321
+   // $("#spn").html(numbers.sort());//op:12345  default
+
+
+
+
+</script>
